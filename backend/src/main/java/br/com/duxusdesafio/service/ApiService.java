@@ -2,6 +2,7 @@ package br.com.duxusdesafio.service;
 
 import br.com.duxusdesafio.model.Integrante;
 import br.com.duxusdesafio.model.Time;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 
 @Service
+@RequiredArgsConstructor
 public class ApiService {
 
     /**

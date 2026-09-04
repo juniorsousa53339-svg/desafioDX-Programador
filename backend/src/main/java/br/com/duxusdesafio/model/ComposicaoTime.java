@@ -1,12 +1,19 @@
 package br.com.duxusdesafio.model;
 
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 
 @Entity
 @Table(name = "composicao_time")
+@Getter
+@Setter
+@NoArgsConstructor
 public class ComposicaoTime {
 	
 	@Id
@@ -18,44 +25,6 @@ public class ComposicaoTime {
 
 	@ManyToOne
 	private Integrante integrante;
-
-	public ComposicaoTime() {
-	}
-
-	public ComposicaoTime(Time time, Integrante integrante) {
-		this.time = time;
-		this.integrante = integrante;
-	}
-
-    public ComposicaoTime(long id, Time time, Integrante integrante) {
-        this.id = id;
-        this.time = time;
-        this.integrante = integrante;
-    }
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public Time getTime() {
-		return time;
-	}
-
-	public void setTime(Time time) {
-		this.time = time;
-	}
-
-	public Integrante getIntegrante() {
-		return integrante;
-	}
-
-	public void setIntegrante(Integrante integrante) {
-		this.integrante = integrante;
-	}
 
 	@Override
 	public final boolean equals(Object o) {

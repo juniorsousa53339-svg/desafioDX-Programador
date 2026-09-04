@@ -1,5 +1,9 @@
 package br.com.duxusdesafio.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -7,6 +11,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "time")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Time {
 
 	@Id
@@ -36,49 +43,13 @@ public class Time {
 	@OneToMany(mappedBy = "time", cascade = CascadeType.ALL)
 	private List<ComposicaoTime> composicaoTime;
 
-	public Time() {
-	}
-
-	public Time(String nomeDoClube, LocalDate data, List<ComposicaoTime> composicaoTime) {
-		this.nomeDoClube = nomeDoClube;
-        this.data = data;
-		this.composicaoTime = composicaoTime;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-    public String getNomeDoClube() {
-        return nomeDoClube;
-    }
-
-    public void setNomeDoClube(String nomeDoClube) {
+    public Time(String nomeDoClube, LocalDate data, List<ComposicaoTime> composicaoTime) {
         this.nomeDoClube = nomeDoClube;
+        this.data = data;
+        this.composicaoTime = composicaoTime;
     }
 
-    public LocalDate getData() {
-		return data;
-	}
-
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
-
-	public List<ComposicaoTime> getComposicaoTime() {
-		return composicaoTime;
-	}
-
-	public void setComposicaoTime(List<ComposicaoTime> composicaoTime) {
-		this.composicaoTime = composicaoTime;
-	}
-
-
-	@Override
+    @Override
 	public final boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Time)) return false;
