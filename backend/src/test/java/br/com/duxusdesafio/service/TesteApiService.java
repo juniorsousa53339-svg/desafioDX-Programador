@@ -101,10 +101,10 @@ public class TesteApiService {
         DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
         List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
 
-        List<String> integrantesEsperados = Arrays.asList(
-                dadosParaTesteApiService.getDenis_rodman().getNome(),
-                dadosParaTesteApiService.getMichael_jordan().getNome(),
-                dadosParaTesteApiService.getScottie_pippen().getNome()
+        List<Integrante> integrantesEsperados = Arrays.asList(
+                dadosParaTesteApiService.getDenis_rodman(),
+                dadosParaTesteApiService.getMichael_jordan(),
+                dadosParaTesteApiService.getScottie_pippen()
         );
         return new Object[][]{
                 {

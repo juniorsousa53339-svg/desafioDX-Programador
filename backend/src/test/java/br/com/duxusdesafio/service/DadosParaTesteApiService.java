@@ -4,6 +4,7 @@ import br.com.duxusdesafio.model.ComposicaoTime;
 import br.com.duxusdesafio.model.Integrante;
 import br.com.duxusdesafio.model.Time;
 
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +12,6 @@ import java.util.List;
 /**
  * Centraliza os dados que existem para os times, integrantes e composições
  */
-
-
 public class DadosParaTesteApiService {
 
     // datas

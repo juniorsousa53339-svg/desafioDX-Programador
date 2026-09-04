@@ -26,7 +26,10 @@ public class ComposicaoTime {
 	@ManyToOne
 	private Integrante integrante;
 
-	@Override
+    public ComposicaoTime(long l, Time timeChicagoBullsDe1994, Integrante michaelJordan) {
+    }
+
+    @Override
 	public final boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof ComposicaoTime)) return false;

@@ -31,7 +31,13 @@ public class Integrante {
 	@OneToMany(mappedBy = "integrante")
 	private List<ComposicaoTime> composicaoTime;
 
-	@Override
+    public Integrante(String michaelJordan, String ala, List<ComposicaoTime> composicaoTime1994E1995) {
+        this.nome = michaelJordan;
+        this.funcao = ala;
+        this.composicaoTime = composicaoTime1994E1995;
+    }
+
+    @Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Integrante)) return false;
