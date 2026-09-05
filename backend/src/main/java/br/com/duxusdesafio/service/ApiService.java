@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Service que possuirá as regras de negócio para o processamento dos dados
@@ -261,8 +258,6 @@ public class ApiService {
     }
 
 
-    // ============= A FAZER ====================
-
     /**
      * Vai retornar o número (quantidade) de aparições de cada Clube participante no período
      */
@@ -303,13 +298,40 @@ public class ApiService {
         return map;
     }
 
+
     /**
      * Vai retornar o número (quantidade) de Funções dentro do período.
      * Dica - pense sobre repetições!
      */
     public Map<String, Long> contagemPorFuncao(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
-        // TODO Implementar método seguindo as instruções!
-        return null;
+
+        List<Time> todosOsTimesNoPeriodo = new ArrayList<>();
+
+        for (Time time : todosOsTimes) {
+            if ((time.getData().equals(dataInicial) || time.getData().isAfter(dataInicial))
+                    && (time.getData().equals(dataFinal) || time.getData().isBefore(dataFinal))) {
+                todosOsTimesNoPeriodo.add(time);
+            }
+        }
+
+        // Junta todos os integrantes do período, sem repetir a mesma pessoa
+        Set<Integrante> integrantesUnicos = new HashSet<>();
+
+        for (Time time : todosOsTimesNoPeriodo) {
+            for (ComposicaoTime composicao : time.getComposicaoTime()) {
+                integrantesUnicos.add(composicao.getIntegrante());
+            }
+        }
+
+        // Agora conta 1 por PESSOA, não por aparição
+        Map<String, Long> map = new HashMap<>();
+
+        for (Integrante integrante : integrantesUnicos) {
+            String funcao = integrante.getFuncao();
+            map.put(funcao, map.getOrDefault(funcao, 0L) + 1);
+        }
+
+        return map;
     }
 
 }
