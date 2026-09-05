@@ -152,17 +152,65 @@ public class ApiService {
         return composicaoMaisUsado;
     }
 
-
-    // ============= A FAZER ====================
-
     /**
      * Vai retornar a função mais recorrente nos times dentro do período
      */
-
     public String funcaoMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
         // TODO Implementar método seguindo as instruções!
-        return null;
+
+
+        List<Time> todosOsTimesNoPeriodo = new ArrayList<>();
+
+        for (Time time : todosOsTimes) {
+
+            if ((time.getData().equals(dataInicial) ||
+                    time.getData().isAfter(dataInicial))
+                    &&
+                    (time.getData().equals(dataFinal) ||
+                            time.getData().isBefore(dataFinal))) {
+
+                todosOsTimesNoPeriodo.add(time);
+            }
+        }
+
+
+        Map<String, Integer> map = new HashMap<>();
+
+
+        for (Time time : todosOsTimesNoPeriodo) {
+
+            for (ComposicaoTime composicao : time.getComposicaoTime()) {
+
+                String funcao = composicao.getIntegrante().getFuncao();
+
+                if (map.containsKey(funcao)) {
+                    map.put(funcao, map.get(funcao) + 1);
+                } else {
+                    map.put(funcao, 1);
+                }
+            }
+        }
+
+        int maiorQuantidade = 0;
+        String funcaoMaisUsada = null;
+
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+
+            if (entry.getValue() > maiorQuantidade) {
+                maiorQuantidade = entry.getValue();
+                funcaoMaisUsada = entry.getKey();
+            }
+
+        }
+
+        return funcaoMaisUsada;
     }
+
+
+
+
+    // ============= A FAZER ====================
+
 
     /**
      * Vai retornar o nome do Clube mais comum dentro do período
