@@ -207,19 +207,62 @@ public class ApiService {
     }
 
 
-
-
-    // ============= A FAZER ====================
-
-
     /**
      * Vai retornar o nome do Clube mais comum dentro do período
      */
     public String clubeMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
         // TODO Implementar método seguindo as instruções!
-        return null;
+
+
+        List<Time> todosOsTimesNoPeriodo = new ArrayList<>();
+
+        for (Time time : todosOsTimes) {
+
+            if ((time.getData().equals(dataInicial) ||
+                    time.getData().isAfter(dataInicial))
+                    &&
+                    (time.getData().equals(dataFinal) ||
+                            time.getData().isBefore(dataFinal))) {
+
+                todosOsTimesNoPeriodo.add(time);
+            }
+        }
+
+
+        Map<String, Integer> map = new HashMap<>();
+
+
+        for (Time time : todosOsTimesNoPeriodo) {
+
+            String clube = time.getNomeDoClube();
+
+            if (map.containsKey(clube)) {
+                map.put(clube, map.get(clube) + 1);
+
+            } else  {
+                map.put(clube, 1);
+            }
+
+        }
+
+        int maiorQuantidade = 0;
+        String clubeMaisfrequente = null;
+
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+
+            if (entry.getValue() > maiorQuantidade) {
+                maiorQuantidade = entry.getValue();
+                clubeMaisfrequente = entry.getKey();
+            }
+
+        }
+
+        return clubeMaisfrequente;
     }
 
+
+
+    // ============= A FAZER ====================
 
     /**
      * Vai retornar o número (quantidade) de aparições de cada Clube participante no período
