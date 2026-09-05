@@ -239,7 +239,7 @@ public class ApiService {
             if (map.containsKey(clube)) {
                 map.put(clube, map.get(clube) + 1);
 
-            } else  {
+            } else {
                 map.put(clube, 1);
             }
 
@@ -261,7 +261,6 @@ public class ApiService {
     }
 
 
-
     // ============= A FAZER ====================
 
     /**
@@ -269,7 +268,39 @@ public class ApiService {
      */
     public Map<String, Long> contagemDeClubesNoPeriodo(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
         // TODO Implementar método seguindo as instruções!
-        return null;
+
+
+        List<Time> todosOsTimesNoPeriodo = new ArrayList<>();
+
+        for (Time time : todosOsTimes) {
+
+            if ((time.getData().equals(dataInicial) ||
+                    time.getData().isAfter(dataInicial))
+                    &&
+                    (time.getData().equals(dataFinal) ||
+                            time.getData().isBefore(dataFinal))) {
+
+                todosOsTimesNoPeriodo.add(time);
+            }
+        }
+
+        Map<String, Long> map = new HashMap<>();
+
+        for (Time time : todosOsTimesNoPeriodo) {
+
+            String clube = time.getNomeDoClube();
+
+            if (map.containsKey(clube)) {
+                map.put(clube, map.get(clube) + 1);
+
+            } else {
+                map.put(clube, 1L);
+
+            }
+
+        }
+
+        return map;
     }
 
     /**
