@@ -4,12 +4,8 @@ import br.com.duxusdesafio.model.ComposicaoTime;
 import br.com.duxusdesafio.model.Integrante;
 import br.com.duxusdesafio.model.Time;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.stereotype.Service;
-
-import java.security.Key;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 
 /**
@@ -26,6 +22,35 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class ApiService {
+
+
+    /**
+     * Filtra os times de acordo com o período informado
+     * As datas inicial e final podem ser nulas
+     */
+    private List<Time> filtrarPorPeriodo(
+            LocalDate dataInicial,
+            LocalDate dataFinal,
+            List<Time> todosOsTimes) {
+
+        List<Time> resultado = new ArrayList<>();
+
+        for (Time time : todosOsTimes) {
+
+            boolean depoisDoInicio = dataInicial == null
+                    || !time.getData().isBefore(dataInicial);
+
+            boolean antesDoFinal = dataFinal == null
+                    || !time.getData().isAfter(dataFinal);
+
+            if (depoisDoInicio && antesDoFinal) {
+                resultado.add(time);
+
+            }
+        }
+        return resultado;
+    }
+
 
     /**
      * Vai retornar um Time, com a composição do time daquela data
@@ -48,26 +73,13 @@ public class ApiService {
     public Integrante integranteMaisUsado(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
         // TODO Implementar método seguindo as instruções!
 
-        List<Time> todosOsTimesNoPeriodo = new ArrayList<>();
-
-        for (Time time : todosOsTimes) {
-
-            if ((time.getData().equals(dataInicial) ||
-                    time.getData().isAfter(dataInicial))
-                    &&
-
-                    (time.getData().equals(dataFinal) ||
-                            time.getData().isBefore(dataFinal))
-            ) {
-
-                todosOsTimesNoPeriodo.add(time);
-            }
-        }
+        List<Time> todosOsTimesNoPeriodo =
+        filtrarPorPeriodo(dataInicial, dataFinal, todosOsTimes);
 
         Map<Integrante, Integer> map = new HashMap<>();
         int valorAtual = 0;
 
-        for (Time time : todosOsTimesNoPeriodo) {
+        for (Time time :  todosOsTimesNoPeriodo) {
             for (ComposicaoTime composicao : time.getComposicaoTime()) {
 
                 if (map.containsKey(composicao.getIntegrante())) {
@@ -104,19 +116,8 @@ public class ApiService {
     public List<String> integrantesDoTimeMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
         // TODO Implementar método seguindo as instruções!
 
-        List<Time> todosOsTimesNoPeriodo = new ArrayList<>();
-
-        for (Time time : todosOsTimes) {
-
-            if ((time.getData().equals(dataInicial) ||
-                    time.getData().isAfter(dataInicial))
-                    &&
-                    (time.getData().equals(dataFinal) ||
-                            time.getData().isBefore(dataFinal))) {
-
-                todosOsTimesNoPeriodo.add(time);
-            }
-        }
+        List<Time> todosOsTimesNoPeriodo =
+                filtrarPorPeriodo(dataInicial, dataFinal, todosOsTimes);
 
         Map<List<String>, Integer> map = new HashMap<>();
 
@@ -155,21 +156,8 @@ public class ApiService {
     public String funcaoMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
         // TODO Implementar método seguindo as instruções!
 
-
-        List<Time> todosOsTimesNoPeriodo = new ArrayList<>();
-
-        for (Time time : todosOsTimes) {
-
-            if ((time.getData().equals(dataInicial) ||
-                    time.getData().isAfter(dataInicial))
-                    &&
-                    (time.getData().equals(dataFinal) ||
-                            time.getData().isBefore(dataFinal))) {
-
-                todosOsTimesNoPeriodo.add(time);
-            }
-        }
-
+        List<Time> todosOsTimesNoPeriodo =
+                filtrarPorPeriodo(dataInicial, dataFinal, todosOsTimes);
 
         Map<String, Integer> map = new HashMap<>();
 
@@ -210,21 +198,8 @@ public class ApiService {
     public String clubeMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
         // TODO Implementar método seguindo as instruções!
 
-
-        List<Time> todosOsTimesNoPeriodo = new ArrayList<>();
-
-        for (Time time : todosOsTimes) {
-
-            if ((time.getData().equals(dataInicial) ||
-                    time.getData().isAfter(dataInicial))
-                    &&
-                    (time.getData().equals(dataFinal) ||
-                            time.getData().isBefore(dataFinal))) {
-
-                todosOsTimesNoPeriodo.add(time);
-            }
-        }
-
+        List<Time> todosOsTimesNoPeriodo =
+                filtrarPorPeriodo(dataInicial, dataFinal, todosOsTimes);
 
         Map<String, Integer> map = new HashMap<>();
 
@@ -264,20 +239,8 @@ public class ApiService {
     public Map<String, Long> contagemDeClubesNoPeriodo(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
         // TODO Implementar método seguindo as instruções!
 
-
-        List<Time> todosOsTimesNoPeriodo = new ArrayList<>();
-
-        for (Time time : todosOsTimes) {
-
-            if ((time.getData().equals(dataInicial) ||
-                    time.getData().isAfter(dataInicial))
-                    &&
-                    (time.getData().equals(dataFinal) ||
-                            time.getData().isBefore(dataFinal))) {
-
-                todosOsTimesNoPeriodo.add(time);
-            }
-        }
+        List<Time> todosOsTimesNoPeriodo =
+                filtrarPorPeriodo(dataInicial, dataFinal, todosOsTimes);
 
         Map<String, Long> map = new HashMap<>();
 
@@ -305,14 +268,8 @@ public class ApiService {
      */
     public Map<String, Long> contagemPorFuncao(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
 
-        List<Time> todosOsTimesNoPeriodo = new ArrayList<>();
-
-        for (Time time : todosOsTimes) {
-            if ((time.getData().equals(dataInicial) || time.getData().isAfter(dataInicial))
-                    && (time.getData().equals(dataFinal) || time.getData().isBefore(dataFinal))) {
-                todosOsTimesNoPeriodo.add(time);
-            }
-        }
+        List<Time> todosOsTimesNoPeriodo =
+                filtrarPorPeriodo(dataInicial, dataFinal, todosOsTimes);
 
         // Junta todos os integrantes do período, sem repetir a mesma pessoa
         Set<Integrante> integrantesUnicos = new HashSet<>();
