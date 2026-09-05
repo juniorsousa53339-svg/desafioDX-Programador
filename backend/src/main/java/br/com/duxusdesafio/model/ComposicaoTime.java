@@ -27,6 +27,9 @@ public class ComposicaoTime {
 	private Integrante integrante;
 
     public ComposicaoTime(long l, Time timeChicagoBullsDe1994, Integrante michaelJordan) {
+        this.id = l;
+        this.time = timeChicagoBullsDe1994;
+        this.integrante = michaelJordan;
     }
 
     @Override
