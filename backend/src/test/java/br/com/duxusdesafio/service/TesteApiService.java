@@ -19,9 +19,9 @@ import static org.junit.Assert.assertEquals;
 @RunWith(DataProviderRunner.class)
 public class TesteApiService {
 
-    private final static LocalDate data1993 = LocalDate.of(1993,1, 1);
-    private final static LocalDate data1994 = LocalDate.of(1994,1, 1);
-    private final static LocalDate data1995 = LocalDate.of(1995,1, 1);
+    private final static LocalDate data1993 = LocalDate.of(1993, 1, 1);
+    private final static LocalDate data1994 = LocalDate.of(1994, 1, 1);
+    private final static LocalDate data1995 = LocalDate.of(1995, 1, 1);
 
     @Spy
     private ApiService apiService;
@@ -30,7 +30,6 @@ public class TesteApiService {
     public void init() {
         MockitoAnnotations.openMocks(this);
     }
-
 
     @DataProvider
     public static Object[][] testTimeDaDataParams() {
@@ -58,13 +57,15 @@ public class TesteApiService {
 
     @Test
     @UseDataProvider("testTimeDaDataParams")
-    public void testTimeDaData(LocalDate data, List<Time> todosOsTimes, Time esperado) {
+    public void testTimeDaData(
+            LocalDate data,
+            List<Time> todosOsTimes,
+            Time esperado) {
 
         Time timeRetornado = apiService.timeDaData(data, todosOsTimes);
 
         assertEquals(esperado, timeRetornado);
     }
-
 
     @DataProvider
     public static Object[][] testIntegranteMaisUsadoParams() {
@@ -83,28 +84,38 @@ public class TesteApiService {
         };
     }
 
-
     @Test
     @UseDataProvider("testIntegranteMaisUsadoParams")
-    public void testIntegranteMaisUsado(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, Integrante esperado) {
+    public void testIntegranteMaisUsado(
+            LocalDate dataInicial,
+            LocalDate dataFinal,
+            List<Time> todosOsTimes,
+            Integrante esperado) {
 
-        Integrante integranteRetornado = apiService.integranteMaisUsado(dataInicial, dataFinal, todosOsTimes);
+        Integrante integranteRetornado =
+                apiService.integranteMaisUsado(
+                        dataInicial,
+                        dataFinal,
+                        todosOsTimes);
 
         assertEquals(esperado, integranteRetornado);
     }
 
-
-
     @DataProvider
     public static Object[][] testTimeMaisRecorrenteParams() {
-        DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
-        List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
 
-        List<Integrante> integrantesEsperados = Arrays.asList(
-                dadosParaTesteApiService.getDenis_rodman(),
-                dadosParaTesteApiService.getMichael_jordan(),
-                dadosParaTesteApiService.getScottie_pippen()
+        DadosParaTesteApiService dadosParaTesteApiService =
+                new DadosParaTesteApiService();
+
+        List<Time> todosOsTimes =
+                dadosParaTesteApiService.getTodosOsTimes();
+
+        List<String> integrantesEsperados = Arrays.asList(
+                dadosParaTesteApiService.getDenis_rodman().getNome(),
+                dadosParaTesteApiService.getMichael_jordan().getNome(),
+                dadosParaTesteApiService.getScottie_pippen().getNome()
         );
+
         return new Object[][]{
                 {
                         data1993,
@@ -117,24 +128,36 @@ public class TesteApiService {
 
     @Test
     @UseDataProvider("testTimeMaisRecorrenteParams")
-    public void testIntegrantesDoTimeMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, List<String> esperado) {
+    public void testIntegrantesDoTimeMaisRecorrente(
+            LocalDate dataInicial,
+            LocalDate dataFinal,
+            List<Time> todosOsTimes,
+            List<String> esperado) {
 
-        List<String> nomeDosIntegrantesDoTimeMaisRecorrente = apiService.integrantesDoTimeMaisRecorrente(dataInicial, dataFinal, todosOsTimes);
+        List<String> nomeDosIntegrantesDoTimeMaisRecorrente =
+                apiService.integrantesDoTimeMaisRecorrente(
+                        dataInicial,
+                        dataFinal,
+                        todosOsTimes);
 
-        if(nomeDosIntegrantesDoTimeMaisRecorrente != null){
-            nomeDosIntegrantesDoTimeMaisRecorrente.sort(Comparator.naturalOrder());
+        if (nomeDosIntegrantesDoTimeMaisRecorrente != null) {
+            nomeDosIntegrantesDoTimeMaisRecorrente.sort(
+                    Comparator.naturalOrder());
         }
 
-        assertEquals(esperado, nomeDosIntegrantesDoTimeMaisRecorrente);
+        assertEquals(
+                esperado,
+                nomeDosIntegrantesDoTimeMaisRecorrente);
     }
-
-
 
     @DataProvider
     public static Object[][] testFuncaoMaisRecorrenteParams() {
 
-        DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
-        List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
+        DadosParaTesteApiService dadosParaTesteApiService =
+                new DadosParaTesteApiService();
+
+        List<Time> todosOsTimes =
+                dadosParaTesteApiService.getTodosOsTimes();
 
         return new Object[][]{
                 {
@@ -148,17 +171,29 @@ public class TesteApiService {
 
     @Test
     @UseDataProvider("testFuncaoMaisRecorrenteParams")
-    public void testFuncaoMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, String esperado) {
+    public void testFuncaoMaisRecorrente(
+            LocalDate dataInicial,
+            LocalDate dataFinal,
+            List<Time> todosOsTimes,
+            String esperado) {
 
-        String funcaoMaisRecorrente = apiService.funcaoMaisRecorrente(dataInicial, dataFinal, todosOsTimes);
+        String funcaoMaisRecorrente =
+                apiService.funcaoMaisRecorrente(
+                        dataInicial,
+                        dataFinal,
+                        todosOsTimes);
 
         assertEquals(esperado, funcaoMaisRecorrente);
     }
 
     @DataProvider
     public static Object[][] testClubeMaisRecorrenteParams() {
-        DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
-        List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
+
+        DadosParaTesteApiService dadosParaTesteApiService =
+                new DadosParaTesteApiService();
+
+        List<Time> todosOsTimes =
+                dadosParaTesteApiService.getTodosOsTimes();
 
         return new Object[][]{
                 {
@@ -172,24 +207,39 @@ public class TesteApiService {
 
     @Test
     @UseDataProvider("testClubeMaisRecorrenteParams")
-    public void testClubeMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, String esperado) {
+    public void testClubeMaisRecorrente(
+            LocalDate dataInicial,
+            LocalDate dataFinal,
+            List<Time> todosOsTimes,
+            String esperado) {
 
-        String clubeMaisRecorrente = apiService.clubeMaisRecorrente(dataInicial, dataFinal, todosOsTimes);
+        String clubeMaisRecorrente =
+                apiService.clubeMaisRecorrente(
+                        dataInicial,
+                        dataFinal,
+                        todosOsTimes);
+
         assertEquals(esperado, clubeMaisRecorrente);
     }
 
     @DataProvider
     public static Object[][] testContagemDeClubesParams() {
 
-        DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
-        List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
+        DadosParaTesteApiService dadosParaTesteApiService =
+                new DadosParaTesteApiService();
+
+        List<Time> todosOsTimes =
+                dadosParaTesteApiService.getTodosOsTimes();
 
         Map<String, Long> esperado1 = new HashMap<>();
-        esperado1.put(dadosParaTesteApiService.getClubeDetroitPistons(), 1L);
-        esperado1.put(dadosParaTesteApiService.getClubeChicagoBulls(), 2L);
+        esperado1.put(
+                dadosParaTesteApiService.getClubeDetroitPistons(), 1L);
+        esperado1.put(
+                dadosParaTesteApiService.getClubeChicagoBulls(), 2L);
 
         Map<String, Long> esperado2 = new HashMap<>();
-        esperado2.put(dadosParaTesteApiService.getClubeChicagoBulls(), 2L);
+        esperado2.put(
+                dadosParaTesteApiService.getClubeChicagoBulls(), 2L);
 
         return new Object[][]{
                 {
@@ -209,19 +259,29 @@ public class TesteApiService {
 
     @Test
     @UseDataProvider("testContagemDeClubesParams")
-    public void testcontagemDeClubesNoPeriodo(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, Map<String, Long> esperado) {
+    public void testcontagemDeClubesNoPeriodo(
+            LocalDate dataInicial,
+            LocalDate dataFinal,
+            List<Time> todosOsTimes,
+            Map<String, Long> esperado) {
 
-        Map<String, Long> contagemDeClubesNoPeriodo = apiService.contagemDeClubesNoPeriodo(dataInicial, dataFinal, todosOsTimes);
+        Map<String, Long> contagemDeClubesNoPeriodo =
+                apiService.contagemDeClubesNoPeriodo(
+                        dataInicial,
+                        dataFinal,
+                        todosOsTimes);
+
         assertEquals(esperado, contagemDeClubesNoPeriodo);
     }
-
-
 
     @DataProvider
     public static Object[][] testContagemPorFuncaoParams() {
 
-        DadosParaTesteApiService dadosParaTesteApiService = new DadosParaTesteApiService();
-        List<Time> todosOsTimes = dadosParaTesteApiService.getTodosOsTimes();
+        DadosParaTesteApiService dadosParaTesteApiService =
+                new DadosParaTesteApiService();
+
+        List<Time> todosOsTimes =
+                dadosParaTesteApiService.getTodosOsTimes();
 
         Map<String, Long> esperado = new HashMap<>();
         esperado.put("ala", 2L);
@@ -239,10 +299,18 @@ public class TesteApiService {
 
     @Test
     @UseDataProvider("testContagemPorFuncaoParams")
-    public void testContagemPorFuncao(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes, Map<String, Long> esperado) {
+    public void testContagemPorFuncao(
+            LocalDate dataInicial,
+            LocalDate dataFinal,
+            List<Time> todosOsTimes,
+            Map<String, Long> esperado) {
 
-        Map<String, Long> contagemPorFuncao = apiService.contagemPorFuncao(dataInicial, dataFinal, todosOsTimes);
+        Map<String, Long> contagemPorFuncao =
+                apiService.contagemPorFuncao(
+                        dataInicial,
+                        dataFinal,
+                        todosOsTimes);
+
         assertEquals(esperado, contagemPorFuncao);
     }
-
 }

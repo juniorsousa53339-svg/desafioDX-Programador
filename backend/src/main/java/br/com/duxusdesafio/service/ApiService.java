@@ -84,7 +84,7 @@ public class ApiService {
                 }
             }
         }
-        System.out.println(map);
+
         int maiorQuantidade = 0;
         Integrante integranteMaisUsado = null;
 
@@ -99,18 +99,66 @@ public class ApiService {
 
     }
 
+
     /**
      * Vai retornar uma lista com os nomes dos integrantes do time mais recorrente dentro do período.
      * OBS: Time é o clube + composição em determinada data
      */
     public List<String> integrantesDoTimeMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
         // TODO Implementar método seguindo as instruções!
-        return null;
+
+        List<Time> todosOsTimesNoPeriodo = new ArrayList<>();
+
+        for (Time time : todosOsTimes) {
+
+            if ((time.getData().equals(dataInicial) ||
+                    time.getData().isAfter(dataInicial))
+                    &&
+                    (time.getData().equals(dataFinal) ||
+                            time.getData().isBefore(dataFinal))) {
+
+                todosOsTimesNoPeriodo.add(time);
+            }
+        }
+
+        Map<List<String>, Integer> map = new HashMap<>();
+
+        for (Time time : todosOsTimesNoPeriodo) {
+
+            List<String> integrantes = new ArrayList<>();
+
+            for (ComposicaoTime composicao : time.getComposicaoTime()) {
+                integrantes.add(composicao.getIntegrante().getNome());
+            }
+
+            if (!map.containsKey(integrantes)) {
+                map.put(integrantes, 1);
+            } else {
+                map.put(integrantes, map.get(integrantes) + 1);
+            }
+        }
+
+        int maiorQuantidade = 0;
+        List<String> composicaoMaisUsado = null;
+
+        for (Map.Entry<List<String>, Integer> entry : map.entrySet()) {
+
+            if (entry.getValue() > maiorQuantidade) {
+                maiorQuantidade = entry.getValue();
+                composicaoMaisUsado = entry.getKey();
+            }
+        }
+
+        return composicaoMaisUsado;
     }
+
+
+    // ============= A FAZER ====================
 
     /**
      * Vai retornar a função mais recorrente nos times dentro do período
      */
+
     public String funcaoMaisRecorrente(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
         // TODO Implementar método seguindo as instruções!
         return null;
