@@ -1,4 +1,5 @@
 package br.com.duxusdesafio.dto;
 
-public record IntegranteRequestDTO() {
+public record IntegranteRequestDTO(String nome, String funcao) {
+
 }
