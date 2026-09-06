@@ -15,7 +15,7 @@
     <groupId>br.com</groupId>
     <artifactId>duxusdesafio</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>duxusdesafio</name>
     <description>Esboço Inicial para o teste do desafio duxus.</description>

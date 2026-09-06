@@ -313,4 +313,53 @@ public class TesteApiService {
 
         assertEquals(esperado, contagemPorFuncao);
     }
+
+
+// Testes adicionais para validar os casos em que as datas do período são nulas.
+
+    @Test
+    public void  testFiltrarPorPeriodoDataInicialNull() {
+
+        DadosParaTesteApiService dados = new DadosParaTesteApiService();
+
+        List<Time> todosOsTimes = dados.getTodosOsTimes();
+
+        // Sem a data inicial, o filtro deve considerar os times
+        // desde o inicio da lista até a data final.
+        List<Time> resultado =
+                apiService.filtrarPorPeriodo(null,data1995,todosOsTimes);
+
+        // Existem 3 times no período: 1993, 1994 e 1995.
+        assertEquals(3, resultado.size());
+    }
+
+    @Test
+    public void  testFiltrarPorPeriodoDataFinalNull() {
+
+        DadosParaTesteApiService dados = new DadosParaTesteApiService();
+
+        List<Time> todosOsTimes = dados.getTodosOsTimes();
+
+        // Sem a data final, o filtro deve considerar os times
+        // a partir da data inicial informada.
+        List<Time> resultado =
+                apiService.filtrarPorPeriodo(data1994,null,todosOsTimes);
+
+        // Devem ser considerados os times de 1994 e 1995.
+        assertEquals(2, resultado.size());
+    }
+
+    @Test
+    public void testFiltrarPorPeriodoDatasNull() {
+
+        DadosParaTesteApiService dados = new DadosParaTesteApiService();
+
+        List<Time> todosOsTimes = dados.getTodosOsTimes();
+
+        // Sem nenhuma restrição de período, todos os times devem ser retornados.
+        List<Time> resultado =
+                apiService.filtrarPorPeriodo(null, null, todosOsTimes);
+
+        assertEquals(3, resultado.size());
+    }
 }

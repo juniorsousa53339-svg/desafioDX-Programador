@@ -28,7 +28,7 @@ public class ApiService {
      * Filtra os times de acordo com o período informado
      * As datas inicial e final podem ser nulas
      */
-    private List<Time> filtrarPorPeriodo(
+    public List<Time> filtrarPorPeriodo(
             LocalDate dataInicial,
             LocalDate dataFinal,
             List<Time> todosOsTimes) {
