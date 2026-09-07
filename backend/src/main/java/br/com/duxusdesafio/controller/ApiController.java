@@ -88,7 +88,7 @@ public class ApiController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/integrantes-Do-Time-Mais-Recorrente")
+    @GetMapping("/integrantes-do-time-mais-recorrente")
     public ResponseEntity<IntegrantesDoTimeMaisRecorrenteResponseDTO> integrantesDoTimeMaisRecorrente(
 
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -114,6 +114,30 @@ public class ApiController {
 
                         integrantes
                 );
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/funcao-mais-recorrente")
+    public ResponseEntity<FuncaoMaisRecorrenteResponseDTO> funcaoMaisRecorrente(
+
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dataInicial,
+
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dataFinal
+
+    ) {
+
+        List<Time> todosOsTimes =
+                timeRepository.findAll();
+
+        var funcao = apiService.funcaoMaisRecorrente(
+                dataInicial, dataFinal, todosOsTimes
+        );
+
+        FuncaoMaisRecorrenteResponseDTO response =
+                new FuncaoMaisRecorrenteResponseDTO(funcao);
 
         return ResponseEntity.ok(response);
     }
