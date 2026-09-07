@@ -23,7 +23,6 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ApiService {
 
-
     /**
      * Filtra os times de acordo com o período informado
      * As datas inicial e final podem ser nulas
