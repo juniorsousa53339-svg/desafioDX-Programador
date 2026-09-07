@@ -150,9 +150,7 @@ public class ApiController {
 
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate dataFinal
-
     ){
-
         List<Time> todosOsTimes =
                 timeRepository.findAll();
 
@@ -165,4 +163,28 @@ public class ApiController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/contagem-de-clubes")
+    public ResponseEntity<ContagemDeClubesNoPeriodoResponseDTO> contagemDeClubesNoPeriodo(
+
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dataInicial,
+
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dataFinal
+    ){
+
+        List<Time> todosOsTimes =
+                timeRepository.findAll();
+
+        var contClubes = apiService.contagemDeClubesNoPeriodo(
+                dataInicial, dataFinal, todosOsTimes
+        );
+
+        ContagemDeClubesNoPeriodoResponseDTO response =
+                new ContagemDeClubesNoPeriodoResponseDTO(contClubes);
+
+        return ResponseEntity.ok(response);
+    }
+
 }
