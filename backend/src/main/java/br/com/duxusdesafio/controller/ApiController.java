@@ -1,9 +1,11 @@
 package br.com.duxusdesafio.controller;
 
+import br.com.duxusdesafio.dto.IntegranteMaisUsadoResponseDTO;
 import br.com.duxusdesafio.dto.TimeDaDataResponseDTO;
 import br.com.duxusdesafio.dto.TimeRequestDTO;
 import br.com.duxusdesafio.dto.TimeResponseDTO;
 import br.com.duxusdesafio.model.ComposicaoTime;
+import br.com.duxusdesafio.model.Integrante;
 import br.com.duxusdesafio.model.Time;
 
 
@@ -14,10 +16,7 @@ import br.com.duxusdesafio.service.ApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -64,4 +63,33 @@ public class ApiController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/integrante-mais-usado")
+    public ResponseEntity<IntegranteMaisUsadoResponseDTO> integranteMaisUsado(
+
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dataInicial,
+
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dataFinal
+    ) {
+
+        List<Time> todosOsTimes =
+                timeRepository.findAll();
+
+        Integrante integrante = apiService.integranteMaisUsado
+                (dataInicial, dataFinal, todosOsTimes);
+
+
+        IntegranteMaisUsadoResponseDTO response =
+                new IntegranteMaisUsadoResponseDTO(
+                        integrante.getNome(),
+                        integrante.getFuncao()
+
+                );
+
+        return ResponseEntity.ok(response);
+    }
+
+
 }
