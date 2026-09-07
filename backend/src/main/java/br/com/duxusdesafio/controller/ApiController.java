@@ -141,4 +141,28 @@ public class ApiController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/clube-mais-recorrente")
+    public ResponseEntity<ClubeMaisRecorrenteResponseDTO> clubeMaisRecorrente(
+
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dataInicial,
+
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dataFinal
+
+    ){
+
+        List<Time> todosOsTimes =
+                timeRepository.findAll();
+
+        var clube = apiService.clubeMaisRecorrente(
+                dataInicial, dataFinal, todosOsTimes
+        );
+
+        ClubeMaisRecorrenteResponseDTO response =
+                new ClubeMaisRecorrenteResponseDTO(clube);
+
+        return ResponseEntity.ok(response);
+    }
 }
