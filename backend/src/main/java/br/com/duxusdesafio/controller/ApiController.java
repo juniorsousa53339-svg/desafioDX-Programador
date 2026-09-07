@@ -1,9 +1,6 @@
 package br.com.duxusdesafio.controller;
 
-import br.com.duxusdesafio.dto.IntegranteMaisUsadoResponseDTO;
-import br.com.duxusdesafio.dto.TimeDaDataResponseDTO;
-import br.com.duxusdesafio.dto.TimeRequestDTO;
-import br.com.duxusdesafio.dto.TimeResponseDTO;
+import br.com.duxusdesafio.dto.*;
 import br.com.duxusdesafio.model.ComposicaoTime;
 import br.com.duxusdesafio.model.Integrante;
 import br.com.duxusdesafio.model.Time;
@@ -91,5 +88,33 @@ public class ApiController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/integrantes-Do-Time-Mais-Recorrente")
+    public ResponseEntity<IntegrantesDoTimeMaisRecorrenteResponseDTO> integrantesDoTimeMaisRecorrente(
 
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dataInicial,
+
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dataFinal
+
+    ) {
+
+        List<Time> todosOsTimes =
+                timeRepository.findAll();
+
+        List<String> integrantes =
+                apiService.integrantesDoTimeMaisRecorrente(
+                        dataInicial,
+                        dataFinal,
+                        todosOsTimes
+                );
+
+        IntegrantesDoTimeMaisRecorrenteResponseDTO response =
+                new IntegrantesDoTimeMaisRecorrenteResponseDTO(
+
+                        integrantes
+                );
+
+        return ResponseEntity.ok(response);
+    }
 }
