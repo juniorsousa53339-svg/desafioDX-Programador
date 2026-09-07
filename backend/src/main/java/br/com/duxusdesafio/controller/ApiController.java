@@ -41,9 +41,12 @@ public class ApiController {
                 timeRepository.findAll();
 
 
-        Time time = apiService.timeDaData(data, times);
+        Time time =
+                apiService.timeDaData(
+                        data, times);
 
-        List<String> integrantes = new ArrayList<>();
+        List<String> integrantes =
+                new ArrayList<>();
 
         for (ComposicaoTime composicao : time.getComposicaoTime()) {
             integrantes.add(composicao.getIntegrante().getNome());
@@ -64,18 +67,24 @@ public class ApiController {
     @GetMapping("/integrante-mais-usado")
     public ResponseEntity<IntegranteMaisUsadoResponseDTO> integranteMaisUsado(
 
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate dataInicial,
 
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate dataFinal
     ) {
 
         List<Time> todosOsTimes =
                 timeRepository.findAll();
 
-        Integrante integrante = apiService.integranteMaisUsado
-                (dataInicial, dataFinal, todosOsTimes);
+        Integrante integrante =
+                apiService.integranteMaisUsado(
+                        dataInicial,
+                        dataFinal,
+                        todosOsTimes
+                );
 
 
         IntegranteMaisUsadoResponseDTO response =
@@ -91,12 +100,13 @@ public class ApiController {
     @GetMapping("/integrantes-do-time-mais-recorrente")
     public ResponseEntity<IntegrantesDoTimeMaisRecorrenteResponseDTO> integrantesDoTimeMaisRecorrente(
 
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate dataInicial,
 
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate dataFinal
-
     ) {
 
         List<Time> todosOsTimes =
@@ -121,10 +131,12 @@ public class ApiController {
     @GetMapping("/funcao-mais-recorrente")
     public ResponseEntity<FuncaoMaisRecorrenteResponseDTO> funcaoMaisRecorrente(
 
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate dataInicial,
 
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate dataFinal
 
     ) {
@@ -132,9 +144,12 @@ public class ApiController {
         List<Time> todosOsTimes =
                 timeRepository.findAll();
 
-        var funcao = apiService.funcaoMaisRecorrente(
-                dataInicial, dataFinal, todosOsTimes
-        );
+        var funcao =
+                apiService.funcaoMaisRecorrente(
+                        dataInicial,
+                        dataFinal,
+                        todosOsTimes
+                );
 
         FuncaoMaisRecorrenteResponseDTO response =
                 new FuncaoMaisRecorrenteResponseDTO(funcao);
@@ -145,17 +160,21 @@ public class ApiController {
     @GetMapping("/clube-mais-recorrente")
     public ResponseEntity<ClubeMaisRecorrenteResponseDTO> clubeMaisRecorrente(
 
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate dataInicial,
 
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate dataFinal
-    ){
+    ) {
         List<Time> todosOsTimes =
                 timeRepository.findAll();
 
         var clube = apiService.clubeMaisRecorrente(
-                dataInicial, dataFinal, todosOsTimes
+                dataInicial,
+                dataFinal,
+                todosOsTimes
         );
 
         ClubeMaisRecorrenteResponseDTO response =
@@ -167,22 +186,55 @@ public class ApiController {
     @GetMapping("/contagem-de-clubes")
     public ResponseEntity<ContagemDeClubesNoPeriodoResponseDTO> contagemDeClubesNoPeriodo(
 
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate dataInicial,
 
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate dataFinal
-    ){
+    ) {
 
         List<Time> todosOsTimes =
                 timeRepository.findAll();
 
-        var contClubes = apiService.contagemDeClubesNoPeriodo(
-                dataInicial, dataFinal, todosOsTimes
-        );
+        var contClubes =
+                apiService.contagemDeClubesNoPeriodo(
+                        dataInicial,
+                        dataFinal,
+                        todosOsTimes
+                );
 
         ContagemDeClubesNoPeriodoResponseDTO response =
                 new ContagemDeClubesNoPeriodoResponseDTO(contClubes);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/contagem-por-funcao")
+    public ResponseEntity<ContagemPorFuncaoResponseDTO> contagemPorFuncao(
+
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dataInicial,
+
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dataFinal
+
+    ) {
+        List<Time> todosOsTimes =
+                timeRepository.findAll();
+
+        var contagemPorFuncao =
+                apiService.contagemPorFuncao(
+                        dataInicial,
+                        dataFinal,
+                        todosOsTimes
+                );
+
+        ContagemPorFuncaoResponseDTO response =
+                new ContagemPorFuncaoResponseDTO(contagemPorFuncao);
 
         return ResponseEntity.ok(response);
     }
