@@ -1,4 +1,4 @@
-package br.com.duxusdesafio.dto;
+package br.com.duxusdesafio.dto.request;
 
 
 

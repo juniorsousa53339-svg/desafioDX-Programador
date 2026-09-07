@@ -1,8 +1,8 @@
 package br.com.duxusdesafio.service;
 
 
-import br.com.duxusdesafio.dto.TimeRequestDTO;
-import br.com.duxusdesafio.dto.TimeResponseDTO;
+import br.com.duxusdesafio.dto.request.TimeRequestDTO;
+import br.com.duxusdesafio.dto.response.TimeResponseDTO;
 import br.com.duxusdesafio.mapper.TimeMapper;
 import br.com.duxusdesafio.model.ComposicaoTime;
 import br.com.duxusdesafio.model.Integrante;
@@ -23,13 +23,13 @@ public class TimeService {
     private final ComposicaoTimeRepository composicaoTimeRepository;
 
 
-    public TimeResponseDTO salvar(TimeRequestDTO request){
+    public TimeResponseDTO salvar(TimeRequestDTO request) {
 
-          Time time =
-                  timeMapper.toEntity(request);
+        Time time =
+                timeMapper.toEntity(request);
 
-          Time salvo =
-                  timeRepository.save(time);
+        Time salvo =
+                timeRepository.save(time);
 
 
         for (Long integranteId : request.integrantesIds()) {
@@ -48,6 +48,6 @@ public class TimeService {
         }
 
 
-          return timeMapper.toResponse(salvo);
+        return timeMapper.toResponse(salvo);
     }
 }

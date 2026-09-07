@@ -1,7 +1,7 @@
 package br.com.duxusdesafio.mapper;
 
-import br.com.duxusdesafio.dto.TimeRequestDTO;
-import br.com.duxusdesafio.dto.TimeResponseDTO;
+import br.com.duxusdesafio.dto.request.TimeRequestDTO;
+import br.com.duxusdesafio.dto.response.TimeResponseDTO;
 import br.com.duxusdesafio.model.Time;
 import org.springframework.stereotype.Component;
 

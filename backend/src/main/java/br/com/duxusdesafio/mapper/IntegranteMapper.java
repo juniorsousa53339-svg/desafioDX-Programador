@@ -1,7 +1,7 @@
 package br.com.duxusdesafio.mapper;
 
-import br.com.duxusdesafio.dto.IntegranteRequestDTO;
-import br.com.duxusdesafio.dto.IntegranteResponseDTO;
+import br.com.duxusdesafio.dto.request.IntegranteRequestDTO;
+import br.com.duxusdesafio.dto.response.IntegranteResponseDTO;
 import br.com.duxusdesafio.model.Integrante;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,6 @@
 package br.com.duxusdesafio.controller;
 
-import br.com.duxusdesafio.dto.*;
+import br.com.duxusdesafio.dto.response.*;
 import br.com.duxusdesafio.model.ComposicaoTime;
 import br.com.duxusdesafio.model.Integrante;
 import br.com.duxusdesafio.model.Time;

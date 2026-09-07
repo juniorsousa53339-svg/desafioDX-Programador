@@ -1,7 +1,7 @@
 package br.com.duxusdesafio.controller;
 
-import br.com.duxusdesafio.dto.TimeRequestDTO;
-import br.com.duxusdesafio.dto.TimeResponseDTO;
+import br.com.duxusdesafio.dto.request.TimeRequestDTO;
+import br.com.duxusdesafio.dto.response.TimeResponseDTO;
 import br.com.duxusdesafio.service.TimeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
