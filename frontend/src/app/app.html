@@ -1,0 +1,394 @@
+<header>
+
+  <h1>Desafio DX - Times</h1>
+
+  <nav>
+
+    <button (click)="abrirDashboard()">
+      Dashboard
+    </button>
+
+    <button (click)="abrirCadastro()">
+      Cadastro
+    </button>
+
+  </nav>
+
+</header>
+
+
+<!-- ========================= -->
+<!-- DASHBOARD -->
+<!-- ========================= -->
+
+@if (tela() === 'dashboard') {
+
+  <main>
+
+    <h2>Dashboard de Times</h2>
+
+
+    <!-- TIME DA DATA -->
+
+    <section class="card">
+
+      <h3>Time da Data</h3>
+
+      <input
+        type="date"
+        [(ngModel)]="data"
+      >
+
+      <button (click)="buscar()">
+        Buscar
+      </button>
+
+      @if (time()) {
+
+        <div class="resultado">
+
+          <p>
+            <strong>Data:</strong>
+            {{ time()?.data }}
+          </p>
+
+          <p>
+            <strong>Clube:</strong>
+            {{ time()?.clube }}
+          </p>
+
+          <p>
+            <strong>Integrantes:</strong>
+          </p>
+
+          @for (
+            integrante of time()?.integrantes;
+            track integrante
+          ) {
+
+            <p>{{ integrante }}</p>
+
+          }
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <!-- PERÍODO -->
+
+    <section class="card">
+
+      <h3>Período</h3>
+
+      <label>Data inicial:</label>
+
+      <input
+        type="date"
+        [(ngModel)]="dataInicial"
+      >
+
+      <label>Data final:</label>
+
+      <input
+        type="date"
+        [(ngModel)]="dataFinal"
+      >
+
+    </section>
+
+
+    <!-- INTEGRANTE MAIS USADO -->
+
+    <section class="card">
+
+      <h3>Integrante mais usado</h3>
+
+      <button (click)="buscarIntegranteMaisUsado()">
+        Buscar
+      </button>
+
+      @if (integrante()) {
+
+        <div class="resultado">
+
+          <p>
+            <strong>Nome:</strong>
+            {{ integrante()?.nome }}
+          </p>
+
+          <p>
+            <strong>Função:</strong>
+            {{ integrante()?.funcao }}
+          </p>
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <!-- TIME MAIS RECORRENTE -->
+
+    <section class="card">
+
+      <h3>Integrantes do Time mais recorrente</h3>
+
+      <button (click)="buscarIntegrantesTimeMaisRecorrente()">
+        Buscar
+      </button>
+
+      @for (
+        integrante of integrantesTime();
+        track integrante
+      ) {
+
+        <div class="resultado">
+          {{ integrante }}
+        </div>
+
+      }
+
+    </section>
+
+
+    <!-- FUNÇÃO MAIS RECORRENTE -->
+
+    <section class="card">
+
+      <h3>Função mais recorrente</h3>
+
+      <button (click)="buscarFuncaoMaisRecorrente()">
+        Buscar
+      </button>
+
+      @if (funcao()) {
+
+        <div class="resultado">
+
+          <strong>Função:</strong>
+          {{ funcao() }}
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <!-- CLUBE MAIS RECORRENTE -->
+
+    <section class="card">
+
+      <h3>Clube mais recorrente</h3>
+
+      <button (click)="buscarClubeMaisRecorrente()">
+        Buscar
+      </button>
+
+      @if (clube()) {
+
+        <div class="resultado">
+
+          <strong>Clube:</strong>
+          {{ clube() }}
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <!-- CONTAGEM DE CLUBES -->
+
+    <section class="card">
+
+      <h3>Contagem de clubes</h3>
+
+      <button (click)="buscarContagemClubes()">
+        Buscar
+      </button>
+
+      @for (
+        item of contagemClubes();
+        track item.nome
+      ) {
+
+        <div class="resultado">
+
+          <strong>{{ item.nome }}:</strong>
+          {{ item.quantidade }}
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <!-- CONTAGEM POR FUNÇÃO -->
+
+    <section class="card">
+
+      <h3>Contagem por função</h3>
+
+      <button (click)="buscarContagemPorFuncao()">
+        Buscar
+      </button>
+
+      @for (
+        item of contagemFuncoes();
+        track item.nome
+      ) {
+
+        <div class="resultado">
+
+          <strong>{{ item.nome }}:</strong>
+          {{ item.quantidade }}
+
+        </div>
+
+      }
+
+    </section>
+
+  </main>
+
+}
+
+
+<!-- ========================= -->
+<!-- CADASTRO -->
+<!-- ========================= -->
+
+@if (tela() === 'cadastro') {
+
+  <main>
+
+    <h2>Cadastro</h2>
+
+
+    <!-- ========================= -->
+    <!-- CADASTRAR INTEGRANTE -->
+    <!-- ========================= -->
+
+    <section class="card">
+
+      <h3>Cadastrar Integrante</h3>
+
+      <input
+        type="text"
+        placeholder="Nome"
+        [(ngModel)]="novoIntegrante.nome"
+      >
+
+      <input
+        type="text"
+        placeholder="Função"
+        [(ngModel)]="novoIntegrante.funcao"
+      >
+
+      <button (click)="cadastrarIntegrante()">
+        Cadastrar integrante
+      </button>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- CADASTRAR TIME -->
+    <!-- ========================= -->
+
+    <section class="card">
+
+      <h3>Cadastrar Time</h3>
+
+      <!-- Nome do clube -->
+
+      <input
+        type="text"
+        placeholder="Nome do clube"
+        [(ngModel)]="novoTime.nomeDoClube"
+      >
+
+
+      <!-- Data do time -->
+
+      <input
+        type="date"
+        [(ngModel)]="novoTime.data"
+      >
+
+
+      <h4>Integrantes</h4>
+
+      <p>
+        Digite os IDs dos integrantes separados por vírgula.
+      </p>
+
+
+      <!-- IDs dos integrantes -->
+
+      <input
+        type="text"
+        placeholder="Ex: 1, 2, 3"
+        [(ngModel)]="idsIntegrantes"
+      >
+
+
+      <!-- Adicionar IDs ao time -->
+
+      <button
+        type="button"
+        (click)="adicionarIntegrantes()"
+      >
+        Adicionar integrantes
+      </button>
+
+
+      <!-- Mostra os integrantes selecionados -->
+
+      @if (novoTime.integrantesIds.length > 0) {
+
+        <div class="resultado">
+
+          <strong>Integrantes selecionados:</strong>
+
+          @for (
+            id of novoTime.integrantesIds;
+            track id
+          ) {
+
+            <p>
+              Integrante ID: {{ id }}
+            </p>
+
+          }
+
+        </div>
+
+      }
+
+
+      <br>
+      <br>
+
+
+      <!-- Cadastrar o time -->
+
+      <button
+        type="button"
+        (click)="cadastrarTime()"
+      >
+        Cadastrar time
+      </button>
+
+    </section>
+
+  </main>
+
+}
